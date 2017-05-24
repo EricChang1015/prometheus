@@ -18,9 +18,11 @@ services:
       - ./prometheus/:/etc/prometheus/
       - prometheus_data:/prometheus
     command:
+      - '-storage.local.retention=168h00m0s'
       - '-config.file=/etc/prometheus/prometheus.yml'
       - '-storage.local.path=/prometheus'
       - '-alertmanager.url=http://alertmanager:9093'
+#      - '-storage.local.target-heap-size=1048576'
     expose:
       - 9090
     ports:
@@ -67,6 +69,8 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 8080:8080
     expose:
       - 8080
     networks:
